@@ -5,3 +5,4 @@ Environmental Economics, Fall 2026, University of Rochester
 - Assignment 2: [Get Outside - Finding Quiet Around Monroe County](https://docs.google.com/presentation/d/1AGe2LH4GJ1lw7yN_9z3G0tA4LO1yzqq-omLAkmxQuDI/edit?usp=sharing)
 - Assignment 3 Synthesis: [Building an Environmental Economy That Americans Can Get Behind](Building an Environmental Economy.pdf)
 - Assignment 3 Recording: [Readings Discussion With Owen B.](Econ Discussion.m4a)
+- Assignment 4 Website: [Extreme Weather](extreme-weather.html)
