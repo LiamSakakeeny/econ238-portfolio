@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extreme Weather: The Risk Story Is Changing | Liam Sakakeeny</title>
+<style>
+:root {
+  --ink:#10233d; --text:#1b1f23; --muted:#5d6873; --paper:#f7f8fa;
+  --panel:#ffffff; --line:#dce3ea; --accent:#d6a84f;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:var(--paper);line-height:1.55}
+a{color:var(--ink)}
+.hero{background:var(--ink);color:white;padding:72px 7vw 60px}
+.hero .eyebrow{letter-spacing:.12em;text-transform:uppercase;font-weight:700;font-size:.82rem;opacity:.75}
+h1{font-size:clamp(2.8rem,7vw,6.5rem);line-height:.95;max-width:1000px;margin:18px 0}
+.hero p{font-size:1.2rem;max-width:850px;color:#dfe8f1}
+.wrap{width:min(1200px,90vw);margin:auto}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:-35px auto 60px;position:relative}
+.stat{background:white;border-radius:18px;padding:26px;box-shadow:0 10px 35px #10233d18;border:1px solid var(--line)}
+.stat strong{display:block;font-size:2.6rem;color:var(--ink);line-height:1}
+.stat span{font-weight:800;text-transform:uppercase;font-size:.8rem;letter-spacing:.08em}
+.stat p{color:var(--muted);margin-bottom:0}
+section{padding:35px 0}
+h2{font-size:2.2rem;line-height:1.1;color:var(--ink);margin-bottom:8px}
+.kicker{color:var(--muted);max-width:800px}
+.chart{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin:24px 0}
+.chart img{display:block;width:100%;height:auto}
+.two{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:start}
+.callout{background:var(--ink);color:white;border-radius:18px;padding:30px}
+.callout h3{margin-top:0;font-size:1.4rem}
+.butwait{background:#f0dfad;border-left:7px solid var(--accent);padding:26px;border-radius:12px}
+.sources{font-size:.9rem;color:var(--muted);border-top:1px solid var(--line);padding:28px 0 60px}
+.poster-link{display:inline-block;background:var(--accent);color:var(--ink);font-weight:800;text-decoration:none;padding:13px 18px;border-radius:10px;margin-top:12px}
+@media(max-width:800px){.grid3,.two{grid-template-columns:1fr}.hero{padding-top:48px}}
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="wrap">
+<div class="eyebrow">ECON 238 · Environmental Economics · Fall 2026</div>
+<h1>The storms are dangerous.<br>The risk story is changing.</h1>
+<p>U.S. deaths from tornadoes, floods and hurricanes have generally fallen on a per-person basis since 1940. But heat mortality and where Americans choose to live make the bigger story more complicated.</p>
+<a class="poster-link" href="ECON238_Extreme_Weather_Poster.pdf">Download the 18 × 24 poster PDF</a>
+</div>
+</header>
+
+<main class="wrap">
+<div class="grid3">
+<div class="stat"><strong>240</strong><span>deaths / year</span><p>Average tornado + flood + hurricane fatalities over 1940–2025.</p></div>
+<div class="stat"><strong>−68%</strong><span>death intensity</span><p>Approximate decline in storm fatalities per million people from the 1940s to the 2010s.</p></div>
+<div class="stat"><strong>382</strong><span>heat deaths / year</span><p>Average NWS heat fatalities in 2020–25, a partial six-year period.</p></div>
+</div>
+
+<section>
+<h2>1. Start with the raw count.</h2>
+<p class="kicker">The number of deaths per year does not move smoothly. Tornadoes dominate the early record; floods become especially important in the 1960s and 1970s; hurricanes create occasional large spikes.</p>
+<div class="chart"><img src="01_raw_fatalities_by_decade.png" alt="Average annual tornado, flood, and hurricane fatalities by decade"></div>
+</section>
+
+<section>
+<h2>2. Then put a denominator underneath it.</h2>
+<p class="kicker">A growing country creates more opportunities for exposure. I define <strong>death intensity</strong> as fatalities per million U.S. residents per year. That makes the change in risk easier to see than raw counts alone.</p>
+<div class="chart"><img src="02_death_intensity.png" alt="Storm fatality intensity per million people by decade"></div>
+<div class="callout">
+<h3>The economic interpretation</h3>
+<p>The decline is consistent with adaptation: better forecasts, warning systems, construction, evacuation, emergency response and other technologies may have reduced the probability that a hazardous event becomes a fatal exposure. But this descriptive dataset cannot tell us how much each factor contributed.</p>
+</div>
+</section>
+
+<section>
+<h2>3. Heat makes the conclusion harder.</h2>
+<p class="kicker">The NWS series begins reporting heat fatalities in 1986. The 1995 heat wave is a huge outlier, while the 2020–25 period is also high. This means “weather deaths are falling” is too broad a conclusion.</p>
+<div class="chart"><img src="03_heat_vs_storm.png" alt="Heat fatalities compared with tornado, flood and hurricane fatalities"></div>
+<p><strong>Important measurement distinction:</strong> NWS fatality counts attribute deaths to hazards recorded in Storm Data. Burke et al. (2025) estimate <em>temperature-attributable mortality</em> using detailed mortality and temperature data across countries. Those are different concepts and should not be compared as if they were the same statistic.</p>
+</section>
+
+<section>
+<h2>4. People do not necessarily move away from risk.</h2>
+<p class="kicker">For one exposure check, consider hurricanes. The Census Bureau reported that Atlantic and Gulf coastline counties grew from 51.9 million residents in 2000 to 59.6 million in 2016. The Gulf Coast region grew 24.5% over that period.</p>
+<div class="two">
+<div class="chart"><img src="04_coastal_population.png" alt="Population in Atlantic and Gulf coastline counties, 2000 and 2016"></div>
+<div class="callout">
+<h3>Exposure is an economic choice, not just a weather fact.</h3>
+<p>Jobs, housing, amenities, family networks and infrastructure create benefits from living in particular places. A risky location can remain attractive when its expected benefits exceed the perceived costs. Population growth in exposed areas therefore complicates any simple story that Americans are “adapting” by retreating.</p>
+</div>
+</div>
+</section>
+
+<section>
+<div class="butwait">
+<h2>But wait.</h2>
+<p>A falling fatality rate is evidence of an outcome—not proof that climate risk is falling. These data do not isolate climate change, adaptation, income, forecasting, emergency management or changes in exposure. Nor do they capture every temperature-related death.</p>
+<p>Burke et al. find that cold accounts for more temperature-attributable mortality than heat in their sample, while hotter places show some adaptation to local climate. Their results reinforce the need to distinguish <em>hazard</em>, <em>exposure</em> and <em>measured mortality</em> rather than treating every “weather death” number as interchangeable.</p>
+</div>
+</section>
+
+<section class="sources">
+<h2>Sources & methods</h2>
+<p><strong>Weather fatalities:</strong> NOAA/National Weather Service Weather-Related Fatality and Injury Statistics and the NWS 80-Year Severe Weather Fatalities table. The annual values used here are from the table supplied with the ECON 238 assignment.</p>
+<p><strong>Population:</strong> U.S. Census Bureau historical population materials and U.S. Bureau of Economic Analysis annual population estimates. Death intensity = annual-average fatalities ÷ average population × 1,000,000.</p>
+<p><strong>Migration/exposure:</strong> U.S. Census Bureau, “60 Million Live in the Path of Hurricanes,” using 2000 and 2016 population estimates for coastline counties.</p>
+<p><strong>Temperature mortality:</strong> Burke et al. (2025), <em>Understanding and Addressing Temperature Impacts on Mortality</em>, NBER Working Paper 34313.</p>
+<p><strong>Qualification:</strong> 2020–25 is a partial period. The NWS heat series begins in 1986. The NWS hazard categories also separate tropical-cyclone wind deaths from fatalities attributed to flooding and tornadoes.</p>
+</section>
+</main>
+</body>
+</html>
