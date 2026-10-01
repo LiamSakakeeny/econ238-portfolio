@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHOW ME: Food Miles vs. Production Footprint</title>
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --accent-color: #2563eb;
+      --alert-color: #d97706;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+      color: #0f172a;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+    }
+
+    .exhibit-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border-color);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #1e293b;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .visualization-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0;
+      background-color: #f1f5f9;
+      border-radius: 8px;
+      padding: 15px;
+    }
+
+    svg {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+    }
+
+    .route-path {
+      fill: none;
+      stroke-width: 4;
+      stroke-dasharray: 8, 8;
+      animation: dash 30s linear infinite;
+    }
+
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -1000;
+      }
+    }
+
+    .node {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .node:hover {
+      transform: scale(1.15);
+    }
+
+    .tooltip {
+      background: rgba(15, 23, 42, 0.9);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      min-height: 48px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .aha-box {
+      background-color: #fef3c7;
+      border-left: 6px solid var(--alert-color);
+      padding: 15px 20px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+
+    .aha-box h3 {
+      margin: 0 0 5px 0;
+      color: #92400e;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #f8fafc;
+    }
+
+    .sources {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 15px;
+    }
+
+    .sources a {
+      color: var(--accent-color);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .replication-box {
+      background-color: #f8fafc;
+      border: 1px dashed var(--border-color);
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>SHOW ME Exhibit: Food Miles vs. Production Footprint</h1>
+    <p class="subtitle">An Interactive Visual Analysis of Lifecycle Carbon Emissions in Fresh Produce</p>
+  </header>
+
+  <!-- EXHIBIT 1: TOMATOES -->
+  <section class="exhibit-card">
+    <h2>1. Tomatoes: Fossil Heating vs. Long-Haul Freight</h2>
+    <p>Hover over or click the supply nodes on the map to inspect the footprint breakdown per kilogram of tomatoes delivered to cold-region urban centers.</p>
+
+    <div class="visualization-container">
+      <svg viewBox="0 0 800 400" id="tomato-map">
+        <!-- Simplified World/Regional Map Shapes -->
+        <rect width="800" height="400" fill="#e0f2fe" rx="8" />
+        
+        <!-- Landmass representations -->
+        <!-- North America -->
+        <path d="M 100 80 Q 200 60 300 100 T 280 250 T 150 280 Z" fill="#cbd5e1" />
+        <!-- South/Central America -->
+        <path d="M 250 260 Q 300 300 320 380 T 260 390 Z" fill="#cbd5e1" />
+
+        <!-- Route Lines -->
+        <!-- Local route (short line in North America) -->
+        <path d="M 220 130 L 250 140" class="route-path" stroke="#ef4444" id="tomato-local-path" />
+        <!-- Import route (long line from Mexico/South) -->
+        <path d="M 220 250 C 200 200, 230 170, 250 140" class="route-path" stroke="#10b981" id="tomato-import-path" />
+
+        <!-- Nodes -->
+        <!-- Destination Market -->
+        <g class="node" onclick="updateTomatoTooltip('destination')">
+          <circle cx="250" cy="140" r="10" fill="#2563eb" />
+          <text x="265" y="145" font-weight="bold" font-size="12">Consumer Market (Northeast US)</text>
+        </g>
+
+        <!-- Local Heated Greenhouse Node -->
+        <g class="node" onclick="updateTomatoTooltip('local')">
+          <circle cx="220" cy="130" r="14" fill="#ef4444" />
+          <text x="130" y="125" font-weight="bold" font-size="12" fill="#991b1b">Local Greenhouse (150 km)</text>
+        </g>
+
+        <!-- Open Field Import Node -->
+        <g class="node" onclick="updateTomatoTooltip('import')">
+          <circle cx="220" cy="250" r="10" fill="#10b981" />
+          <text x="110" y="265" font-weight="bold" font-size="12" fill="#065f46">Warm Region Field (2,000 km)</text>
+        </g>
+      </svg>
+
+      <div class="tooltip" id="tomato-tooltip">
+        Click or hover over a node on the map to view detailed emission metrics.
+      </div>
+    </div>
+
+    <div class="aha-box">
+      <h3>💡 The "Aha!" Insight: How vs. How Far</h3>
+      <p>Local heated greenhouse production creates **over 4x the total carbon footprint** of imported field tomatoes. Transporting produce thousands of miles by truck generates far fewer emissions than using fossil fuels to heat a local greenhouse during winter.</p>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Supply Path</th>
+          <th>Production Emissions</th>
+          <th>Transport Emissions</th>
+          <th>Total CO₂e / kg</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Local (Fossil-Heated Greenhouse)</strong></td>
+          <td>~2.25 kg CO₂e</td>
+          <td>~0.05 kg CO₂e</td>
+          <td><strong>~2.30 kg CO₂e</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Imported (Warm Field + Truck Freight)</strong></td>
+          <td>~0.20 kg CO₂e</td>
+          <td>~0.30 kg CO₂e</td>
+          <td><strong>~0.50 kg CO₂e</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sources">
+      <strong>Data Sources:</strong>
+      <ul>
+        <li><a href="https://css.umich.edu/publications/research-publications/greenhouse-gas-emissions-tomato-production-and-supply-systematic" target="_blank">University of Michigan CSS – LCA of Tomato Production</a></li>
+        <li><a href="https://ourworldindata.org/food-choice-vs-eating-local" target="_blank">Our World in Data – Environmental Impact of Food Miles</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EXHIBIT 2: APPLES -->
+  <section class="exhibit-card">
+    <h2>2. Apples: Seasonal Storage vs. Ocean Transoceanic Freight</h2>
+    <p>Hover over or click the supply nodes to discover how time in cold storage changes the carbon narrative for naturally abundant local crops.</p>
+
+    <div class="visualization-container">
+      <svg viewBox="0 0 800 400" id="apple-map">
+        <!-- Oceans and Land -->
+        <rect width="800" height="400" fill="#e0f2fe" rx="8" />
+        
+        <!-- North America -->
+        <path d="M 150 60 Q 250 50 320 90 T 300 220 T 180 250 Z" fill="#cbd5e1" />
+        <!-- Southern Hemisphere (e.g. South America / Oceania) -->
+        <path d="M 550 250 Q 650 240 700 280 T 650 380 T 520 350 Z" fill="#cbd5e1" />
+
+        <!-- Route Lines -->
+        <!-- Local Fresh Route -->
+        <path d="M 240 110 L 270 120" class="route-path" stroke="#10b981" id="apple-fresh-path" />
+        <!-- Local Stored Route (longer time icon represented by arc) -->
+        <path d="M 240 110 C 220 80, 290 80, 270 120" class="route-path" stroke="#f59e0b" id="apple-stored-path" />
+        <!-- Ocean Route -->
+        <path d="M 600 280 C 450 250, 350 180, 270 120" class="route-path" stroke="#3b82f6" id="apple-import-path" />
+
+        <!-- Nodes -->
+        <!-- Destination Market -->
+        <g class="node" onclick="updateAppleTooltip('destination')">
+          <circle cx="270" cy="120" r="10" fill="#2563eb" />
+          <text x="285" y="125" font-weight="bold" font-size="12">Consumer Market (Northeast US)</text>
+        </g>
+
+        <!-- Local Orchard Node -->
+        <g class="node" onclick="updateAppleTooltip('local')">
+          <circle cx="240" cy="110" r="12" fill="#10b981" />
+          <text x="130" y="105" font-weight="bold" font-size="12" fill="#065f46">Northeastern Orchard</text>
+        </g>
+
+        <!-- Southern Hemisphere Import Node -->
+        <g class="node" onclick="updateAppleTooltip('import')">
+          <circle cx="600" cy="280" r="12" fill="#3b82f6" />
+          <text x="470" y="300" font-weight="bold" font-size="12" fill="#1e3a8a">Southern Orchard (~9,000 km Ocean)</text>
+        </g>
+      </svg>
+
+      <div class="tooltip" id="apple-tooltip">
+        Click or hover over a node on the map to view detailed emission metrics.
+      </div>
+    </div>
+
+    <div class="aha-box">
+      <h3>💡 The "Aha!" Insight: The Cold Storage Flip</h3>
+      <p>Eating a local apple in Autumn yields the absolute lowest footprint (~0.25 kg CO₂e). However, by Spring or Summer, keeping local apples in Controlled Atmosphere refrigeration for 8–10 months **doubles their footprint (~0.45 kg CO₂e)**—making fresh Southern Hemisphere imports shipped via ultra-efficient ocean freight competitive or cleaner.</p>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Supply Scenario</th>
+          <th>Production</th>
+          <th>Storage (Cold/CA)</th>
+          <th>Transport</th>
+          <th>Total CO₂e / kg</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Local Fresh (Autumn Harvest)</strong></td>
+          <td>~0.15 kg</td>
+          <td>~0.02 kg</td>
+          <td>~0.08 kg</td>
+          <td><strong>~0.25 kg CO₂e</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Local Stored (9 Months Refrigerated)</strong></td>
+          <td>~0.15 kg</td>
+          <td>~0.22 kg</td>
+          <td>~0.08 kg</td>
+          <td><strong>~0.45 kg CO₂e</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Imported (Fresh Ocean Freight)</strong></td>
+          <td>~0.15 kg</td>
+          <td>~0.05 kg</td>
+          <td>~0.22 kg</td>
+          <td><strong>~0.42 kg CO₂e</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sources">
+      <strong>Data Sources:</strong>
+      <ul>
+        <li><a href="https://www.researchgate.net/publication/285319758_Comparing_local_versus_imported_apples_A_focus_on_energy_use" target="_blank">ResearchGate – Energy Use Assessment: Local vs. Imported Apples</a></li>
+        <li><a href="https://ecochain.com/blog/the-environmental-footprint-of-fruit-from-europe-south-america-compared/" target="_blank">Ecochain – Life Cycle Footprint of Fruit Imports</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="replication-box">
+    <strong>Replication & Methodology Notes:</strong>
+    <p>Calculations reflect median values per kilogram of produce delivered to Northeast US retail markets. Functional unit: 1 kg edible produce. Model assumptions include heavy-goods road vehicle (HGV) freight intensity (~0.15 kg CO₂e/tkm), ocean container shipping intensity (~0.015 kg CO₂e/tkm), and grid-average electricity intensity for long-term industrial refrigeration.</p>
+  </div>
+
+  <footer>
+    <p>SHOW ME Project Exhibit | Econ 238 | Created with AI Collaboration</p>
+  </footer>
+
+  <script>
+    function updateTomatoTooltip(node) {
+      const tooltip = document.getElementById('tomato-tooltip');
+      if (node === 'destination') {
+        tooltip.innerHTML = "<strong>Destination Market:</strong> Northeast US Retailer.<br>Receives produce from both local and international supply paths.";
+      } else if (node === 'local') {
+        tooltip.innerHTML = "<strong>Local Heated Greenhouse:</strong> Distance: 150 km.<br>Production: 2.25 kg CO₂e (Heavy fossil fuel heating) | Transport: 0.05 kg CO₂e.<br><strong>Total: ~2.30 kg CO₂e / kg</strong>";
+      } else if (node === 'import') {
+        tooltip.innerHTML = "<strong>Warm Region Field:</strong> Distance: 2,000 km.<br>Production: 0.20 kg CO₂e (Solar heat) | Transport: 0.30 kg CO₂e (Truck freight).<br><strong>Total: ~0.50 kg CO₂e / kg</strong>";
+      }
+    }
+
+    function updateAppleTooltip(node) {
+      const tooltip = document.getElementById('apple-tooltip');
+      if (node === 'destination') {
+        tooltip.innerHTML = "<strong>Destination Market:</strong> Northeast US Retailer.<br>Compares local seasonal fruit with ocean imports.";
+      } else if (node === 'local') {
+        tooltip.innerHTML = "<strong>Northeastern Orchard:</strong> Distance: 200 km.<br>Fresh Harvest Total: <strong>0.25 kg CO₂e</strong><br>Stored (9 Months CA Storage) Total: <strong>0.45 kg CO₂e</strong> (Storage adds ~0.22 kg CO₂e)";
+      } else if (node === 'import') {
+        tooltip.innerHTML = "<strong>Southern Hemisphere Orchard:</strong> Distance: ~9,000 km (Ocean).<br>Production: 0.15 kg CO₂e | Ocean Transport: 0.22 kg CO₂e | Storage: 0.05 kg CO₂e.<br><strong>Total: ~0.42 kg CO₂e / kg</strong>";
+      }
+    }
+  </script>
+</body>
+</html>
