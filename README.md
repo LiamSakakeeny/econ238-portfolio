@@ -6,3 +6,4 @@ Environmental Economics, Fall 2026, University of Rochester
 - Assignment 3 Synthesis: [Building an Environmental Economy That Americans Can Get Behind](Building an Environmental Economy.pdf)
 - Assignment 3 Recording: [Readings Discussion With Owen B.](Econ Discussion.m4a)
 - Assignment 4 Website: [Extreme Weather](extreme-weather.html)
+[new website](Index.html)
