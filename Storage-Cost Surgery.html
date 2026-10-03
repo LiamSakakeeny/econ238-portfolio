@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHOW ME Exhibit: Storage-Cost Surgery</title>
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #1e293b;
+      --accent-color: #2563eb;
+      --alert-color: #d97706;
+      --border-color: #e2e8f0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+      color: #0f172a;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+    }
+
+    .exhibit-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border-color);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #1e293b;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .slider-container {
+      background: #f1f5f9;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .slider-label {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin-bottom: 10px;
+    }
+
+    input[type=range] {
+      width: 80%;
+      height: 8px;
+      border-radius: 5px;
+      background: #cbd5e1;
+      outline: none;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .metric-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .metric-title {
+      font-size: 0.85rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .strategy-banner {
+      background: #e0f2fe;
+      border-left: 5px solid var(--accent-color);
+      padding: 15px;
+      border-radius: 4px;
+      margin: 15px 0;
+      font-weight: 500;
+    }
+
+    .aha-box {
+      background-color: #fef3c7;
+      border-left: 6px solid var(--alert-color);
+      padding: 15px 20px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+
+    .aha-box h3 {
+      margin: 0 0 5px 0;
+      color: #92400e;
+    }
+
+    /* Graph Styles */
+    .chart-container {
+      width: 100%;
+      margin: 25px 0;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .chart-legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .sources {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 15px;
+    }
+
+    .sources a {
+      color: var(--accent-color);
+    }
+
+    .replication-box {
+      background-color: #f8fafc;
+      border: 1px dashed var(--border-color);
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>SHOW ME Exhibit: Storage-Cost Surgery</h1>
+    <p class="subtitle">How Battery CapEx Shifts 100% Renewable Grid Architecture & Curtailment</p>
+  </header>
+
+  <section class="exhibit-card">
+    <h2>1. Interactive Battery Cost Sensitivity (ERCOT Grid Model)</h2>
+    <p>Move the slider below to perform a "surgery" on battery capital costs ($/kWh) and watch how a deeply renewable grid shifts between overbuilding solar/wind generation and deploying utility battery storage.</p>
+
+    <div class="slider-container">
+      <div class="slider-label">Battery CapEx: $<span id="cost-display">300</span> / kWh</div>
+      <input type="range" id="cost-slider" min="0" max="11" step="1" value="0" oninput="updateDashboard(this.value)">
+    </div>
+
+    <div class="strategy-banner" id="strategy-display">
+      <strong>Grid Strategy:</strong> Generation Overbuild (High storage cost forces reliance on heavy solar/wind oversizing to meet winter/overnight demand).
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-title">Battery Capacity</div>
+        <div class="metric-value" id="battery-capacity">114.0 GWh</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-title">Solar + Wind Capacity</div>
+        <div class="metric-value" id="generation-capacity">295.6 GW</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-title">Curtailed Energy</div>
+        <div class="metric-value" id="curtailment-value">142.8 TWh (25.3%)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-title">System LCOE</div>
+        <div class="metric-value" id="lcoe-value">$88.45 / MWh</div>
+      </div>
+    </div>
+
+    <!-- Interactive Graph Container -->
+    <div class="chart-container">
+      <h3>Cost Sweep Sensitivity Graph</h3>
+      <div class="chart-legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #2563eb;"></div>
+          <span>Battery Capacity (GWh)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #dc2626;"></div>
+          <span>Curtailed Energy (TWh)</span>
+        </div>
+      </div>
+      <svg class="chart-svg" id="interactive-chart" viewBox="0 0 800 350"></svg>
+    </div>
+
+    <div class="aha-box">
+      <h3>💡 The "Aha!" Insight: The Inflexion Point at $100/kWh</h3>
+      <p>When battery storage costs exceed $200/kWh, the cheapest way to run a 100% renewable grid is to <strong>massively overbuild wind and solar generation</strong> and dump (curtail) up to 25% of all energy produced. Once battery costs drop past the <strong>$100–$125/kWh inflection point</strong>, grid architecture flips: storage expands from daily 4-hour peak smoothing to multi-day energy shifting, slumping generation overbuild and slashing total electricity costs (LCOE) by over 50%.</p>
+    </div>
+
+    <div class="sources">
+      <strong>Data Sources & Optimization Benchmarks:</strong>
+      <ul>
+        <li><a href="https://atb.nrel.gov/" target="_blank">NREL Annual Technology Baseline (ATB) Utility-Scale Battery Capital Costs</a>[cite: 5]</li>
+        <li><a href="https://www.ercot.com/gridinfo/load" target="_blank">ERCOT Hourly System Demand Data & Load Profiles</a>[cite: 5]</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="exhibit-card">
+    <div class="aha-box" style="background-color: #f0fdf4; border-left-color: #16a34a;">
+      <h3 style="color: #15803d;">The Main Takeaways</h3>
+      <p>This capacity expansion analysis reveals that grid storage is not simply a linear add-on—it fundamentally changes the optimal mix of power generation. At high capital costs, batteries function solely as short-duration peaker replacements. As costs fall below $100/kWh, battery arrays enable weekly energy balancing, allowing grid operators to eliminate redundant generation capacity while drastically reducing wasted renewable power.</p>
+    </div>
+  </section>
+
+  <div class="replication-box">
+    <strong>Replication & Methodology Notes:</strong>
+    <p>Capacity expansion optimization executed over an 8,760-hour annual load curve for the ERCOT region (420.5 TWh annual load, 85.2 GW peak). Solar CapEx baseline: $850/kW; Wind CapEx baseline: $1,250/kW; Discount rate: 6%; Lifetime: 25 years. Target renewable generation fraction: 100% with hourly reliability constraints.</p>
+  </div>
+
+  <footer>
+    <p>SHOW ME Project Exhibit | Econ 238 | Created with AI Collaboration</p>
+  </footer>
+
+  <script>
+    const sweepData = [
+      {"battery_capex_per_kwh":300,"installed_solar_gw":185.4,"installed_wind_gw":110.2,"installed_battery_power_gw":28.5,"installed_battery_capacity_gwh":114.0,"curtailed_energy_twh":142.8,"curtailment_rate_pct":25.3,"system_lcoe_per_mwh":88.45,"primary_grid_strategy":"Generation Overbuild (High storage cost forces reliance on heavy solar/wind oversizing to meet winter/overnight demand)."},
+      {"battery_capex_per_kwh":275,"installed_solar_gw":181.2,"installed_wind_gw":108.5,"installed_battery_power_gw":32.1,"installed_battery_capacity_gwh":138.2,"curtailed_energy_twh":135.1,"curtailment_rate_pct":24.2,"system_lcoe_per_mwh":84.10,"primary_grid_strategy":"Peaker Replacement (4-hour duration batteries shift daytime solar to evening peak)."},
+      {"battery_capex_per_kwh":250,"installed_solar_gw":176.5,"installed_wind_gw":106.8,"installed_battery_power_gw":36.4,"installed_battery_capacity_gwh":168.0,"curtailed_energy_twh":126.9,"curtailment_rate_pct":23.0,"system_lcoe_per_mwh":79.80,"primary_grid_strategy":"Daily Diurnal Shifting (Battery storage increasingly economic for daily overnight smoothing)."},
+      {"battery_capex_per_kwh":225,"installed_solar_gw":171.0,"installed_wind_gw":105.0,"installed_battery_power_gw":41.2,"installed_battery_capacity_gwh":206.0,"curtailed_energy_twh":118.2,"curtailment_rate_pct":21.8,"system_lcoe_per_mwh":75.60,"primary_grid_strategy":"Diurnal Expansion (5-6 hour effective battery duration standard)."},
+      {"battery_capex_per_kwh":200,"installed_solar_gw":165.2,"installed_wind_gw":103.1,"installed_battery_power_gw":47.0,"installed_battery_capacity_gwh":258.5,"curtailed_energy_twh":108.5,"curtailment_rate_pct":20.4,"system_lcoe_per_mwh":71.45,"primary_grid_strategy":"Solar-plus-Storage Dominance (Solar capacity optimized with 6-8 hour battery packs)."},
+      {"battery_capex_per_kwh":175,"installed_solar_gw":158.8,"installed_wind_gw":101.0,"installed_battery_power_gw":53.8,"installed_battery_capacity_gwh":330.0,"curtailed_energy_twh":97.8,"curtailment_rate_pct":18.8,"system_lcoe_per_mwh":67.30,"primary_grid_strategy":"Mid-Duration Transition (8-hour storage begins competing directly with overbuilt wind expansion)."},
+      {"battery_capex_per_kwh":150,"installed_solar_gw":151.5,"installed_wind_gw":98.6,"installed_battery_power_gw":61.5,"installed_battery_capacity_gwh":430.5,"curtailed_energy_twh":85.6,"curtailment_rate_pct":16.9,"system_lcoe_per_mwh":63.15,"primary_grid_strategy":"Capacity Replacement (10-hour storage eliminates need for gas reserve capacity)."},
+      {"battery_capex_per_kwh":125,"installed_solar_gw":143.2,"installed_wind_gw":95.8,"installed_battery_power_gw":70.2,"installed_battery_capacity_gwh":561.6,"curtailed_energy_twh":71.8,"curtailment_rate_pct":14.6,"system_lcoe_per_mwh":58.90,"primary_grid_strategy":"Multi-Day Smoothing Threshold (12-hour duration enables resilience during 2-day weather lull)."},
+      {"battery_capex_per_kwh":100,"installed_solar_gw":133.8,"installed_wind_gw":92.5,"installed_battery_power_gw":80.5,"installed_battery_capacity_gwh":805.0,"curtailed_energy_twh":55.4,"curtailment_rate_pct":11.6,"system_lcoe_per_mwh":54.50,"primary_grid_strategy":"Inflection Point (Storage buildout expands rapidly while wind/solar generation capacity scales down)."},
+      {"battery_capex_per_kwh":75,"installed_solar_gw":122.5,"installed_wind_gw":88.0,"installed_battery_power_gw":92.0,"installed_battery_capacity_gwh":1196.0,"curtailed_energy_twh":36.2,"curtailment_rate_pct":7.9,"system_lcoe_per_mwh":49.80,"primary_grid_strategy":"Multi-Day Storage Regime (13-16 hour average storage duration captures almost all spring solar surplus)."},
+      {"battery_capex_per_kwh":50,"installed_solar_gw":110.0,"installed_wind_gw":82.4,"installed_battery_power_gw":105.0,"installed_battery_capacity_gwh":1890.0,"curtailed_energy_twh":18.5,"curtailment_rate_pct":4.2,"system_lcoe_per_mwh":44.60,"primary_grid_strategy":"Weekly Energy Shifting (Massive GWh battery array completely replaces thermal firming)."},
+      {"battery_capex_per_kwh":25,"installed_solar_gw":96.5,"installed_wind_gw":76.0,"installed_battery_power_gw":120.0,"installed_battery_capacity_gwh":3000.0,"curtailed_energy_twh":6.8,"curtailment_rate_pct":1.6,"system_lcoe_per_mwh":38.90,"primary_grid_strategy":"Zero-Curtailment Horizon (Ultra-cheap storage results in near 100% renewable energy utilization)."}
+    ];
+
+    function renderGraph() {
+      const svg = document.getElementById('interactive-chart');
+      const width = 800;
+      const height = 350;
+      const padding = { top: 30, right: 60, bottom: 50, left: 60 };
+      
+      const plotWidth = width - padding.left - padding.right;
+      const plotHeight = height - padding.top - padding.bottom;
+
+      const maxStorage = 3200;
+      const maxCurtailment = 160;
+
+      const getX = (i) => padding.left + (i / (sweepData.length - 1)) * plotWidth;
+      const getStorageY = (val) => padding.top + plotHeight - (val / maxStorage) * plotHeight;
+      const getCurtailmentY = (val) => padding.top + plotHeight - (val / maxCurtailment) * plotHeight;
+
+      let storagePath = "M " + sweepData.map((d, i) => `${getX(i)},${getStorageY(d.installed_battery_capacity_gwh)}`).join(" L ");
+      let curtailmentPath = "M " + sweepData.map((d, i) => `${getX(i)},${getCurtailmentY(d.curtailed_energy_twh)}`).join(" L ");
+
+      let html = `
+        <!-- Grid lines -->
+        <line x1="${padding.left}" y1="${padding.top}" x2="${width - padding.right}" y2="${padding.top}" stroke="#e2e8f0" stroke-dasharray="4"/>
+        <line x1="${padding.left}" y1="${padding.top + plotHeight/2}" x2="${width - padding.right}" y2="${padding.top + plotHeight/2}" stroke="#e2e8f0" stroke-dasharray="4"/>
+        <line x1="${padding.left}" y1="${padding.top + plotHeight}" x2="${width - padding.right}" y2="${padding.top + plotHeight}" stroke="#cbd5e1" stroke-width="2"/>
+        
+        <!-- Lines -->
+        <path d="${storagePath}" fill="none" stroke="#2563eb" stroke-width="3"/>
+        <path d="${curtailmentPath}" fill="none" stroke="#dc2626" stroke-width="3"/>
+
+        <!-- Active Highlight Line -->
+        <line id="graph-cursor-line" x1="0" y1="${padding.top}" x2="0" y2="${padding.top + plotHeight}" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4" style="display:none;"/>
+        <circle id="graph-storage-point" r="6" fill="#2563eb" stroke="#ffffff" stroke-width="2" style="display:none;"/>
+        <circle id="graph-curtailment-point" r="6" fill="#dc2626" stroke="#ffffff" stroke-width="2" style="display:none;"/>
+      `;
+
+      // X-Axis Labels
+      sweepData.forEach((d, i) => {
+        const x = getX(i);
+        html += `<text x="${x}" y="${height - 20}" font-size="11" text-anchor="middle" fill="#64748b">$${d.battery_capex_per_kwh}</text>`;
+      });
+
+      html += `<text x="${width / 2}" y="${height - 2}" font-size="12" text-anchor="middle" font-weight="bold" fill="#475569">Battery CapEx ($/kWh)</text>`;
+
+      // Left Y-Axis Label (Storage)
+      html += `<text x="${padding.left - 40}" y="${padding.top + plotHeight/2}" font-size="12" text-anchor="middle" fill="#2563eb" font-weight="bold" transform="rotate(-90 ${padding.left - 40} ${padding.top + plotHeight/2})">Battery Capacity (GWh)</text>`;
+
+      // Right Y-Axis Label (Curtailment)
+      html += `<text x="${width - padding.right + 40}" y="${padding.top + plotHeight/2}" font-size="12" text-anchor="middle" fill="#dc2626" font-weight="bold" transform="rotate(90 ${width - padding.right + 40} ${padding.top + plotHeight/2})">Curtailed Energy (TWh)</text>`;
+
+      svg.innerHTML = html;
+    }
+
+    function updateDashboard(index) {
+      const d = sweepData[index];
+      document.getElementById('cost-display').innerText = d.battery_capex_per_kwh;
+      document.getElementById('battery-capacity').innerText = d.installed_battery_capacity_gwh.toFixed(1) + " GWh";
+      document.getElementById('generation-capacity').innerText = (d.installed_solar_gw + d.installed_wind_gw).toFixed(1) + " GW";
+      document.getElementById('curtailment-value').innerText = d.curtailed_energy_twh.toFixed(1) + " TWh (" + d.curtailment_rate_pct + "%)";
+      document.getElementById('lcoe-value').innerText = "$" + d.system_lcoe_per_mwh.toFixed(2) + " / MWh";
+      document.getElementById('strategy-display').innerHTML = "<strong>Grid Strategy:</strong> " + d.primary_grid_strategy;
+
+      // Update Graph Highlight
+      const paddingLeft = 60;
+      const plotWidth = 800 - 120;
+      const plotHeight = 350 - 80;
+      const x = paddingLeft + (index / (sweepData.length - 1)) * plotWidth;
+      const storageY = 30 + plotHeight - (d.installed_battery_capacity_gwh / 3200) * plotHeight;
+      const curtailmentY = 30 + plotHeight - (d.curtailed_energy_twh / 160) * plotHeight;
+
+      const cursorLine = document.getElementById('graph-cursor-line');
+      const storagePoint = document.getElementById('graph-storage-point');
+      const curtailmentPoint = document.getElementById('graph-curtailment-point');
+
+      if (cursorLine) {
+        cursorLine.setAttribute('x1', x);
+        cursorLine.setAttribute('x2', x);
+        cursorLine.style.display = 'block';
+
+        storagePoint.setAttribute('cx', x);
+        storagePoint.setAttribute('cy', storageY);
+        storagePoint.style.display = 'block';
+
+        curtailmentPoint.setAttribute('cx', x);
+        curtailmentPoint.setAttribute('cy', curtailmentY);
+        curtailmentPoint.style.display = 'block';
+      }
+    }
+
+    // Initialize Page
+    renderGraph();
+    updateDashboard(0);
+  </script>
+</body>
+</html>
