@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marine Protection & Clean Energy Corridor Act</title>
+    <style>
+        :root {
+            --primary-color: #1b4332;
+            --secondary-color: #2d6a4f;
+            --accent-color: #d8f3dc;
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --border-color: #ced4da;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .official-tag {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+
+        .ballot-box {
+            background-color: #f1faee;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .ballot-box h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Voting Section Styles */
+        .voting-container {
+            background-color: var(--accent-color);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .voting-container h2 {
+            border-bottom: none;
+            color: var(--primary-color);
+        }
+
+        .vote-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .vote-btn {
+            background-color: white;
+            border: 2px solid var(--secondary-color);
+            color: var(--primary-color);
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .vote-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Conditional Input Area */
+        #conditional-input-container {
+            display: none;
+            margin-top: 15px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        #conditional-input-container textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            resize: vertical;
+            height: 80px;
+        }
+
+        #submit-vote-btn {
+            margin-top: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #submit-vote-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* Results view */
+        #results-container {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        .result-bar-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .result-bar-bg {
+            background-color: #e9ecef;
+            border-radius: 4px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .result-bar-fill {
+            background-color: var(--secondary-color);
+            height: 100%;
+            width: 0%;
+            transition: width 0.6s ease;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="official-tag">State Ballot Initiative &bull; Official Proposal</div>
+        <h1>Marine Protection & Clean Energy Corridor Act</h1>
+    </header>
+
+    <div class="ballot-box">
+        <h3>THE BALLOT QUESTION</h3>
+        <p>Shall the state authorize a targeted, highly regulated underground transmission corridor for offshore wind energy through a strictly limited 2-mile segment of the coastal marine sanctuary, provided that the developer pays a mandatory 15% gross-revenue ocean stewardship fee directly into a permanent state trust fund dedicated exclusively to buying out commercial fishing permits in overfished zones, restoring coastal wetlands, and establishing permanent no-take marine reserves?</p>
+    </div>
+
+    <section>
+        <h2>WHAT HAPPENS IF SOMEONE VOTES YES?</h2>
+        <p>If passed, the state energy board will grant a restricted right-of-way permit for sub-seabed cable trenching through a designated sector of the marine sanctuary under strict environmental oversight. Simultaneously, a legally binding trust fund will be established, capturing 15% of project revenues. Compliance will be tracked via mandatory annual public ecological audits and financial disclosures confirming that all trust disbursements are channeled exclusively into wetland restoration and marine reserve acquisitions.</p>
+    </section>
+
+    <section>
+        <h2>WHAT'S THE DEAL?</h2>
+        <ul>
+            <li><strong>Environmental benefit:</strong> We secure massive, long-term funding to permanently restore degraded coastal wetlands and establish zero-take marine sanctuaries, shielding key fish nurseries from commercial overfishing.</li>
+            <li><strong>What we are giving up:</strong> Temporary seabed disruption and minor, localized habitat disturbance along a narrow, 2-mile offshore construction corridor.</li>
+            <li><strong>Who benefits:</strong> Regional marine ecosystems, endangered coastal species, recreational fishers, and the state’s long-term clean energy grid.</li>
+            <li><strong>Who bears the costs:</strong> Marine life and local habitats immediately adjacent to the trenching zone during the construction phase.</li>
+            <li><strong>Who pays:</strong> Offshore wind energy developers via upfront permitting fees and a perpetual 15% gross-revenue extraction levy.</li>
+            <li><strong>Scale:</strong> A multi-million-dollar annual conservation endowment generating permanent funding for state coastal restoration.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>THE BEST CASE FOR YES</h2>
+        <p>Transitioning to clean energy is an urgent priority, but renewable infrastructure also requires physical space. By allowing a minor, highly mitigated localized footprint in a marine sanctuary, we unlock an unprecedented, self-sustaining financial engine for ocean conservation. Instead of relying on fluctuating state budgets or voluntary donations, this trade uses private green-energy capital to permanently fund large-scale marine reserves and wetland restoration that would otherwise never be financed. It is a pragmatic bargain that accelerates decarbonization while aggressively expanding ocean protection.</p>
+    </section>
+
+    <section>
+        <h2>THE BEST CASE FOR NO</h2>
+        <p>Compromising the integrity of protected marine sanctuaries—even partially—sets a dangerous legal and regulatory precedent for public lands and waters. Once we open protected marine zones to industrial energy corridors, future projects will demand similar exceptions, gradually eroding the legal shield protecting our most vulnerable waters. Furthermore, construction-phase trenching can cause irreversible harm to sensitive benthic communities, disrupting marine mammal migration patterns and local fish habitats. We should not trade permanent ecological protection for speculative financial offsets.</p>
+    </section>
+
+    <section>
+        <h2>WHERE IS THE BODY BURIED?</h2>
+        <p>The weakest assumption is that mitigation fees and restoration projects can fully offset the ecological damage caused by disturbing fragile seabed ecosystems. If the trenching alters local sediment flows or permanently destroys a vital fish spawning ground, the localized harm is immediate and irreversible, whereas the ecological benefits of the trust fund depend entirely on future political management and efficient fund allocation. What could go wrong? Construction overruns or legal loopholes could delay the funding stream while the physical environmental damage to the marine sanctuary has already been locked in.</p>
+    </section>
+
+    <section>
+        <h2>WHY ISN'T THIS ALREADY HAPPENING?</h2>
+        <p>Environmental advocacy groups are traditionally built around absolute preservation ("not a single square foot compromised"), making any trade-off involving industrial infrastructure in a protected area politically toxic to assemble. Meanwhile, energy developers fiercely resist heavy revenue-sharing levies, arguing that a 15% gross-revenue tax makes projects economically unviable compared to building elsewhere. Because the costs (localized disruption) are immediate and concentrated on conservationists' watchlists, while the benefits (widespread marine restoration) are diffuse and long-term, neither political coalition has an incentive to champion this compromise.</p>
+    </section>
+
+    <!-- VOTING MODULE -->
+    <div class="voting-container" id="voting-card">
+        <h2>WOULD YOU TAKE THIS DEAL?</h2>
+        <p>Cast your anonymous ballot below:</p>
+        
+        <div class="vote-options" id="voting-options-group">
+            <button class="vote-btn" onclick="castVote('YES')">YES</button>
+            <button class="vote-btn" onclick="castVote('NO')">NO</button>
+            <button class="vote-btn" onclick="prepareConditionalVote()">YES, IF...</button>
+        </div>
+
+        <div id="conditional-input-container">
+            <label for="conditional-text" style="font-size: 0.9rem; font-weight: bold; display:block; margin-bottom: 5px;">What condition would make you say YES?</label>
+            <textarea id="conditional-text" placeholder="Enter your condition here..."></textarea>
+            <button id="submit-vote-btn" onclick="submitConditionalVote()">Submit Vote</button>
+        </div>
+
+        <!-- Results Display -->
+        <div id="results-container">
+            <h3 style="margin-top:0; color: var(--primary-color);">Election Results</h3>
+            
+            <div class="result-bar-wrapper">
+                <div class="result-label" id="label-yes">YES (0 votes - 0%)</div>
+                <div class="result-bar-bg"><div class="result-bar-fill" id="bar-yes"></div></div>
+            </div>
+
+            <div class="result-bar-wrapper">
+                <div class="result-label" id="label-no">NO (0 votes - 0%)</div>
+                <div class="result-bar-bg"><div class="result-bar-fill" id="bar-no"></div></div>
+            </div>
+
+            <div class="result-bar-wrapper">
+                <div class="result-label" id="label-conditional">YES, IF... (0 votes - 0%)</div>
+                <div class="result-bar-bg"><div class="result-bar-fill" id="bar-conditional"></div></div>
+            </div>
+            
+            <p style="font-size: 0.85rem; text-align: center; margin-top: 15px; color: #6c757d;">Thank you for participating! Your vote has been recorded anonymously.</p>
+        </div>
+    </div>
+
+    <footer>
+        Eco 238 Fall Assignment &bull; Real Environmental Bargains Project
+    </footer>
+</div>
+
+<script>
+    // Initialize or load vote counts from localStorage
+    function getVotes() {
+        let votes = localStorage.getItem('ballot_votes_v1');
+        if (!votes) {
+            votes = { yes: 5, no: 3, conditional: 2, comments: ["If the buffer zone is expanded by 2 miles.", "If monitoring is handled by an independent third party."] };
+            localStorage.setItem('ballot_votes_v1', JSON.stringify(votes));
+        } else {
+            votes = JSON.parse(votes);
+        }
+        return votes;
+    }
+
+    function castVote(type) {
+        let votes = getVotes();
+        if (type === 'YES') votes.yes++;
+        if (type === 'NO') votes.no++;
+        
+        localStorage.setItem('ballot_votes_v1', JSON.stringify(votes));
+        showResults(votes);
+    }
+
+    function prepareConditionalVote() {
+        document.getElementById('voting-options-group').style.display = 'none';
+        document.getElementById('conditional-input-container').style.display = 'block';
+    }
+
+    function submitConditionalVote() {
+        let comment = document.getElementById('conditional-text').value.trim();
+        let votes = getVotes();
+        votes.conditional++;
+        if (comment) {
+            if (!votes.comments) votes.comments = [];
+            votes.comments.push(comment);
+        }
+        localStorage.setItem('ballot_votes_v1', JSON.stringify(votes));
+        showResults(votes);
+    }
+
+    function showResults(votes) {
+        document.getElementById('voting-options-group').style.display = 'none';
+        document.getElementById('conditional-input-container').style.display = 'none';
+        
+        let total = votes.yes + votes.no + votes.conditional;
+        if (total === 0) total = 1; // Prevent division by zero
+
+        let yesPct = Math.round((votes.yes / total) * 100);
+        let noPct = Math.round((votes.no / total) * 100);
+        let condPct = Math.round((votes.conditional / total) * 100);
+
+        document.getElementById('label-yes').innerText = `YES (${votes.yes} votes - ${yesPct}%)`;
+        document.getElementById('bar-yes').style.width = yesPct + '%';
+
+        document.getElementById('label-no').innerText = `NO (${votes.no} votes - ${noPct}%)`;
+        document.getElementById('bar-no').style.width = noPct + '%';
+
+        document.getElementById('label-conditional').innerText = `YES, IF... (${votes.conditional} votes - ${condPct}%)`;
+        document.getElementById('bar-conditional').style.width = condPct + '%';
+
+        document.getElementById('results-container').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
